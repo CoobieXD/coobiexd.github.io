@@ -646,7 +646,7 @@
 				<div class="paperclip"></div>
 				<div id="list" class="">
 					<img id="list_img" src="/img/list.png" alt="" style="width: 100%;">
-					<canvas width="4960" height="7016" id="canvas" style="width: 100%; display: block; margin: 0 auto; display: none;">Обновите браузер</canvas>
+					<canvas width="4960" height="7016" id="canvas" style="width: 100%; display: block; margin: 0 auto; /*display: none;*/">Обновите браузер</canvas>
 				</div>
 			</div>
 		</div>
@@ -798,7 +798,7 @@
 
 
 
-/*
+
 		var htmlCanvas = document.getElementById("canvas");
 
 
@@ -841,7 +841,7 @@
 
 
 		}
-*/
+
 
 
 
@@ -886,7 +886,8 @@
 		var sendText = function(){
 			var text = $("#text").val();
 				$.ajax({
-					url: "https://api.coo.by/writer_core/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
+					// url: "https://api.coo.by/writer_core/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
+					url: "http://api2.coo.by/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
 					type: "post",
 					data: {text: text},
 					dataType: "json",
