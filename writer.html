@@ -826,7 +826,7 @@
 				// jsonpCallback: "logResults",
 				// jsonp: "callback",
 				success: async function(data){
-					console.log(data);
+					console.log('data='+data);
 
 					var spritesToLoad = Object.keys(data[0]);
 					await loadSprites(spritesToLoad, sprites);
