@@ -823,6 +823,7 @@
 				type: "get",
 				data: {text: text},
 				dataType: "jsonp",
+				jsonp: "callback",
 				success: async function(data){
 
 					var spritesToLoad = Object.keys(data[0]);
