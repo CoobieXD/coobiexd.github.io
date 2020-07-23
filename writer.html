@@ -825,8 +825,9 @@
 				dataType: "jsonp",
 				// jsonpCallback: "logResults",
 				jsonpCallback: 'processJSONPResponse',
-				// jsonp: "callback",
+				jsonp: "callback",
 				success: async function(data){
+					console.log('success');
 					console.log('data='+data);
 
 					var spritesToLoad = Object.keys(data[0]);
