@@ -2,9 +2,14 @@
 <html>
 <head>
 	<title>Писец</title>
-	<meta refresh="3;/writer">
+	<meta refresh="1;/writer">
 </head>
 <body>
-	Через мгновение вы будете перенаправлены на страницу приложения «Писец»
+	<a href="/writer">Через мгновение вы будете перенаправлены на страницу приложения «Писец»</a>
+	<script type="text/javascript">
+		setTimeout(function(){
+			location="/writer";
+		}, 1000);
+	</script>
 </body>
 </html>
