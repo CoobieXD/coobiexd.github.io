@@ -822,8 +822,8 @@
 				url: "http://api2.coo.by/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
 				type: "get",
 				data: {text: text},
-				dataType: "jsonp",
-				jsonp: "callback",
+				dataType: "json",
+				// jsonp: "callback",
 				success: async function(data){
 
 					var spritesToLoad = Object.keys(data[0]);
