@@ -831,7 +831,7 @@
 					console.log('data='+data);
 
 					var spritesToLoad = Object.keys(data[0]);
-					await loadSprites(spritesToLoad, sprites);
+					loadSprites(spritesToLoad, sprites);
 					renderList(canvas, sprites, data[0], isMobile);
 					// await showList(canvas);
 
