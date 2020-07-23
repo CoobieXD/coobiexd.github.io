@@ -820,10 +820,11 @@
 			$.ajax({
 				// url: "/writer_core/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
 				url: "//api2.coo.by/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
-				type: "get",
+				type: "GET",
 				data: {text: text},
 				dataType: "jsonp",
 				// jsonpCallback: "logResults",
+				jsonpCallback: 'processJSONPResponse'
 				// jsonp: "callback",
 				success: async function(data){
 					console.log('data='+data);
