@@ -824,14 +824,14 @@
 				data: {text: text},
 				dataType: "jsonp",
 				// jsonpCallback: "logResults",
-				jsonpCallback: 'processJSONPResponse',
-				jsonp: "callback",
-				success: function(data){
+				// jsonpCallback: 'processJSONPResponse',
+				// jsonp: "callback",
+				success: async function(data){
 					console.log('success');
 					console.log('data='+data);
 
 					var spritesToLoad = Object.keys(data[0]);
-					loadSprites(spritesToLoad, sprites);
+					await loadSprites(spritesToLoad, sprites);
 					renderList(canvas, sprites, data[0], isMobile);
 					// await showList(canvas);
 
