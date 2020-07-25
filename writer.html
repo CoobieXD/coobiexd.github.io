@@ -819,16 +819,17 @@
 			var text = $("#text").val();
 			$.ajax({
 				// url: "/writer_core/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
-				url: "//api2.coo.by/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
-				type: "GET",
+				// url: "//api2.coo.by/list.php?scratch&hyphen",
+				url: "//api.coo.by/writer/list.php?scratch&hyphen",
+				type: "POST",
 				data: {text: text},
-				dataType: "jsonp",
+				dataType: "json",
 				// jsonpCallback: "logResults",
 				// jsonpCallback: 'processJSONPResponse',
 				// jsonp: "callback",
 				success: async function(data){
-					console.log('success');
-					console.log('data='+data);
+					// console.log('success');
+					// console.log('data='+data);
 
 					var spritesToLoad = Object.keys(data[0]);
 					await loadSprites(spritesToLoad, sprites);
