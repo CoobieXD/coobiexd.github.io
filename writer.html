@@ -1,32 +1,31 @@
-
 <!doctype html>
-<html class="no-js" lang="ru">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Писец 2.0 — генератор конспектов для ленивых студентов и не только :p</title>
-<meta name="description" content="Онлайн-сервис для перевода цифрового текста в рукописный используя человеческий почерк с последующей печатью на принтере, попросту говоря «генератор конспектов» для ленивых студентов и не только :з">
-<meta name="keywords" content="Coobie, Куби, handwritten, cursive font, писец, конспект, рукописный шрифт, печать конспектов, генератор конспектов, лайфхак, сщщюин">
-<meta name="author" content="Coobie">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:site" content="@c00613">
-<meta property="fb:admins" content="c00613">
-<meta property="og:type" content="website">
-<meta property="og:title" itemprop="headline" name="twitter:title" content="Писец 2.0 — генератор рукописных конспектов для ленивых студентов и не только :p">
-<meta property="og:description" itemprop="description" name="twitter:description" content="Онлайн-сервис для перевода цифрового текста в рукописный используя как шрифт человеческий почерк с последующей печатью на принтере, попросту говоря «генератор рукописных конспектов» для ленивых студентов и не только :з">
-<meta property="og:url" itemprop="url" content="http://coo.by/writer_dev">
-<meta property="og:image" itemprop="image" name="twitter:image:src" content="og_image.png?v=um4duKbq2">
-<link rel="icon" href="/favicon-16x16.png?v=um4duKbq" sizes="16x16">
-<link rel="icon" href="/favicon-32x32.png?v=um4duKbq" sizes="32x32">
-<link rel="mask-icon" href="/safari-pinned-tab.svg?v=um4duKbq" color="#2888cc">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=um4duKbq">
-<meta name="apple-mobile-web-app-title" content="Coobie">
-<meta name="application-name" content="Coobie">
-<meta name="msapplication-TileImage" content="/mstile-310x310.png?v=um4duKbq">
-<meta name="msapplication-TileColor" content="#2888cc">
-<meta name="theme-color" content="#ffffff">
-<style>
+	<html class="no-js" lang="ru">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Писец 2.0 — генератор конспектов для ленивых студентов и не только :p</title>
+	<meta name="description" content="Онлайн-сервис для перевода цифрового текста в рукописный используя человеческий почерк с последующей печатью на принтере, попросту говоря «генератор конспектов» для ленивых студентов и не только :з">
+	<meta name="keywords" content="Coobie, Куби, handwritten, cursive font, писец, конспект, рукописный шрифт, печать конспектов, генератор конспектов, лайфхак, сщщюин">
+	<meta name="author" content="Coobie">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@c00613">
+	<meta property="fb:admins" content="c00613">
+	<meta property="og:type" content="website">
+	<meta property="og:title" itemprop="headline" name="twitter:title" content="Писец 2.0 — генератор рукописных конспектов для ленивых студентов и не только :p">
+	<meta property="og:description" itemprop="description" name="twitter:description" content="Онлайн-сервис для перевода цифрового текста в рукописный используя как шрифт человеческий почерк с последующей печатью на принтере, попросту говоря «генератор рукописных конспектов» для ленивых студентов и не только :з">
+	<meta property="og:url" itemprop="url" content="http://coo.by/writer_dev">
+	<meta property="og:image" itemprop="image" name="twitter:image:src" content="og_image.png?v=um4duKbq2">
+	<link rel="icon" href="/favicon-16x16.png?v=um4duKbq" sizes="16x16">
+	<link rel="icon" href="/favicon-32x32.png?v=um4duKbq" sizes="32x32">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg?v=um4duKbq" color="#2888cc">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=um4duKbq">
+	<meta name="apple-mobile-web-app-title" content="Coobie">
+	<meta name="application-name" content="Coobie">
+	<meta name="msapplication-TileImage" content="/mstile-310x310.png?v=um4duKbq">
+	<meta name="msapplication-TileColor" content="#2888cc">
+	<meta name="theme-color" content="#ffffff">
+	<style>
 		@import "//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css";
 		@import "//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css";
 
@@ -619,41 +618,86 @@
 	</style>
 </head>
 <body class="loading">
-<main>
-<div class="section left">
-<div class="airpods airpod_l"></div>
-<div class="airpods airpod_r"></div>
-<div class="ipad_border">
-<div class="ipad">
-<div class="ipad_screen">
-<textarea name="" id="text" placeholder="Введите текст.." autofocus></textarea>
-<button id="write" disabled style="display: none;">Перевести в рукопись</button>
-</div>
-<div class="ipad_home"></div>
-</div>
-</div>
 
-</div>
-<div class="section middle">
-<div class="pencil"></div>
-</div>
-<div class="section right">
-<div class="clipboard">
-<div class="paperclip"></div>
-<div id="list" class="">
-<img id="list_img" src="/img/list.png" alt="" style="width: 100%;">
-<canvas width="4960" height="7016" id="canvas" style="width: 100%; display: block; margin: 0 auto; /*display: none;*/">Обновите браузер</canvas>
-</div>
-</div>
-</div>
+	<main>
+		<div class="section left">
+			<div class="airpods airpod_l"></div>
+			<div class="airpods airpod_r"></div>
+			<div class="ipad_border">
+				<div class="ipad">
+					<div class="ipad_screen">
+						<textarea name="" id="text" placeholder="Введите текст.." autofocus></textarea>
+						<button id="write" disabled style="display: none;">Перевести в рукопись</button>
+					</div>
+					<div class="ipad_home"></div>
+				</div>
+			</div>
 
-</main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
-<script>
+	<!-- <div class="icon iconvk"></div> -->
 
-		var genRand = function(min=0, max=Number.MAX_SAFE_INTEGER) {
-			return Math.floor(min + Math.random() * (max + 1 - min));
+
+		</div>
+		<div class="section middle">
+			<div class="pencil"></div>
+		</div>
+		<div class="section right">
+			<div class="clipboard">
+				<div class="paperclip"></div>
+				<div id="list" class="">
+					<img id="list_img" src="/img/list.png" alt="" style="width: 100%;">
+					<canvas width="4960" height="7016" id="canvas" style="width: 100%; display: block; margin: 0 auto; /*display: none;*/">Обновите браузер</canvas>
+				</div>
+			</div>
+		</div>
+		<!-- <footer>made by Coobie with ♥</footer> -->
+	</main>
+
+
+
+
+
+		<div class="popup">
+			<div class="env_list">
+				<span class="glyphicon glyphicon-remove-circle env_list_x" aria-hidden="true"></span>
+				<p class="title">Приветствую тебя, дорогой <span class="username">%USERNAME%</span>!</p>
+				<br>
+				<p>Содержание и развитие моего сервиса требует значительных затрат: как временных, так и финансовых. А доступ ко всему функционалу был, есть и всегда будет абсолютно бесплатным! Я вкладываю в этот проект частичку себя и очень стараюсь радовать вас новыми возможностями «Писца», а также понятным и симпатичным дизайном.</p>
+				<p>Любая поддержка очень важна для меня! Перевод можно совершить при помощи банковской карты (Visa/MasterCard), Яндекс.Денег или со счета мобильного телефона на произвольную сумму при помощи данной формы:</p>
+
+				<!-- <img src="/writer_core/img/paperclip_red.png" class="clip"> -->
+				<div class="widget_donate">
+					<iframe src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0&targets-hint=&default-sum=250&button-text=14&payment-type-choice=on&mobile-payment-type-choice=on&comment=on&hint=&successURL=https%3A%2F%2Fcoo.by%2Fwriter&quickpay=shop&account=410011578231730" width="100%" height="301" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+				</div>
+
+				<p>или указанных ниже реквизитов:</p>
+
+				<div class="tape"></div>
+				<pre style="white-space: normal; margin: 8px;">
+					<div class="form-group">
+						<a href="http://money.yandex.ru/to/410013503880907" class="col-md-5">Yandex.Money</a>
+						<div class="col-md-7">410013503880907</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-5">Credit Card <small>(Privat24)</small></div>
+						<div class="col-md-7">5169360009021381</div>
+					</div>
+				</pre>
+			</div>
+			<div class="env_list_before"></div>
+			<div class="env_list_after"></div>
+		</div>
+
+
+
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+	<script>
+
+		var getRandom = function(min, max){
+			return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
 
 
@@ -713,23 +757,58 @@
 		dpi = '300';
 		var sprites = [];
 		var main_sprite = 'cyrillic_lowercase';
-
-
-/*
+		var sprites_loaded = [];
 		sprites[main_sprite] = new Image();
 		sprites[main_sprite].crossOrigin = 'anonymous';
 		sprites[main_sprite].src = './writer_core/cursives/kate/bitmaps/sprites/tiny/'+dpi+'dpi/'+main_sprite+'.png';
 		// sprite.src = 'https://raw.githubusercontent.com/CoobieXD/coobiexd.github.io/master/sprite.png?2';
 		sprites[main_sprite].onload = function() {
+			sprites_loaded[main_sprite] = true;
 			$('body').removeClass('loading');
 			$("#write").prop('disabled', false);
+		}
+
+
+
+
+
+
+
+/*
+if(window.OffscreenCanvas){
+	
+} else {
+	
+}
+*/
+
+
+
+
+
+
+		var canvas = document.createElement('canvas'),
+		canvas_ctx = canvas.getContext('2d');
+
+
+
+
+
+		var htmlCanvas = document.getElementById("canvas");
+		// var offscreen = htmlCanvas.transferControlToOffscreen();
+		// var offscreen = new OffscreenCanvas();
+
+
+
+/*
+		var worker = new Worker('worker.js');
+		list = new Image();
+		list.src = 'writer_core/lists/list_dots.png';
+		list.onload = function() {
+			worker.postMessage({canvas: offscreen}, [offscreen]);
+
 		}
 */
-			$('body').removeClass('loading');
-			$("#write").prop('disabled', false);
-
-		// const imgblob = await fetch('writer_core/lists/list_dots.png').then(r => r.blob());
-		// const img = await createImageBitmap(imgblob);
 
 
 
@@ -750,16 +829,15 @@
 
 
 
-		if(window.OffscreenCanvas){
-			// var worker = new Worker('worker.js');
-			// var htmlCanvas = document.getElementById("canvas");
-			// var offscreen = htmlCanvas.transferControlToOffscreen();
-			// var offscreen = new OffscreenCanvas(4960, 7016);
-			// worker.postMessage({canvas: offscreen, data: data}, [offscreen]);
-		} else {
 
-		}
-		var canvas = document.createElement('canvas');
+
+
+
+
+
+
+
+
 
 
 
@@ -774,136 +852,85 @@
 
 		var sendText = function(){
 			var text = $("#text").val();
-			$.ajax({
-				// url: "/writer_core/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
-				// url: "//api2.coo.by/list.php?scratch&hyphen",
-				url: "//api.coo.by/writer/list.php?scratch&hyphen",
-				type: "POST",
-				data: {text: text},
-				dataType: "json",
-				// jsonpCallback: "logResults",
-				// jsonpCallback: 'processJSONPResponse',
-				// jsonp: "callback",
-				success: async function(data){
-					// console.log('success');
-					// console.log('data='+data);
+				$.ajax({
+					// url: "https://api.coo.by/writer_core/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
+					url: "https://api.coo.by/writer/list.php?scratch&hyphen",
+					type: "post",
+					data: {text: text},
+					dataType: "json",
+					success: function(data){
+					
+						data = data[0];
 
-					var spritesToLoad = Object.keys(data[0]);
-					await loadSprites(spritesToLoad, sprites);
-					renderList(canvas, sprites, data[0], isMobile);
-					// await showList(canvas);
-
-				}
-			});
-		}
+						var renderList = function(){
+							var ratio = isMobile ? 0.5 : 1;
+							ratio = 0.5;
 
 
 
 
 
-		var loadSprites = async function(spritesToLoad, sprites){
-			 return new Promise((resolve) => {
-			console.log('loadSprites 1');
-			if(spritesToLoad.every(spriteToLoad => sprites.hasOwnProperty(spriteToLoad))){
-				// return 1;
-				resolve(1);
-			} else {
-				var j=0;
-				for(var i=0; i<spritesToLoad.length; i++) {
-					if(!sprites.hasOwnProperty(spritesToLoad[i])){
-						var sprite = new Image();
-						sprite.src = './writer_core/cursives/kate/bitmaps/sprites/tiny/'+dpi+'dpi/'+spritesToLoad[i]+'.png';
-						// sprite.src = './writer_core/cursives/kate/bitmaps/sprites/tiny/'+dpi+'dpi/'+spritesToLoad[i]+'.png?rand='+genRand();
-						// sprite.src = './gh-pages/writer_core/cursives/kate/bitmaps/sprites/tiny/'+dpi+'dpi/'+spritesToLoad[i]+'.png?rand='+genRand();
-						sprite.onload = function(){
-							j++;
-							console.log(j);
-							if(j >= spritesToLoad.length){
-								console.log('spriteLoaded 2');
-								// return 1;
-								resolve(1);
+							canvas.width = 4960*ratio;
+							canvas.height = 7016*ratio;
+							if(window.location.hash !== '#max_blame'){
+								canvas_ctx.fillStyle = "#fff";
+								canvas_ctx.fillRect(0, 0, canvas.width, canvas.height);
+							} else {
+								canvas_ctx.clearRect(0, 0, canvas.width, canvas.height);
 							}
+							$.each(data, function(key, items){
+								items.forEach((item) => {
+									canvas_ctx.drawImage(sprites[key],   item[2][0]*ratio,   item[2][1]*ratio,   item[2][2]*ratio,   item[2][3]*ratio,   item[0]*ratio,   item[1]*ratio,   item[2][2]*ratio,   item[2][3]*ratio);
+								})
+							});
+
+
+
+
+							$('#list_img').attr('crossorigin', 'anonymous');
+							$('#list_img').attr("src", canvas.toDataURL());
+							// $('#list').css('margin-left', '0');
+							$('#list').show();
+
+
+
+
+
+
+							$('.clipboard').removeClass('loading');
+							$('body').removeClass('loading');
+							$("#write").prop('disabled', false);
 						}
-						sprites[spritesToLoad[i]] = sprite;
+
+						var needed_keys = Object.keys(data);
+						if(needed_keys.every(needed_key => sprites.hasOwnProperty(needed_key))){
+							renderList();
+						} else {
+							$.each(data, function(key, value){
+								if(!sprites.hasOwnProperty(key)){
+									all_loaded = false;
+									sprites[key] = new Image();
+									sprites[key].crossOrigin = 'anonymous';
+									sprites[key].src = './writer_core/cursives/kate/bitmaps/sprites/tiny/'+dpi+'dpi/'+key+'.png';
+									sprites[key].onload = function() {
+										sprites_loaded[key] = true;
+										var canRender = true;
+										$.each(needed_keys, function(key, needed_key){
+											if(!sprites[needed_key].complete){
+												canRender = false;
+											}
+										});
+										if(canRender === true){
+											renderList();
+										}
+									}
+								}
+							});
+						}
+
 					}
-				}
-			}
-			 })
-		};
-
-
-
-
-
-		var renderList = async function(canvas, sprites, data, isMobile){
-			console.log('renderList 3');
-
-			var canvas_ctx = canvas.getContext('2d');
-
-			// console.log(data);
-			// console.log(sprites);
-
-			var r = isMobile ? 0.5 : 1;
-			r = 0.5;
-
-			canvas.width = 4960*r;
-			canvas.height = 7016*r;
-			if(window.location.hash !== '#max_blame'){
-				canvas_ctx.fillStyle = "#fff";
-				canvas_ctx.fillRect(0, 0, canvas.width, canvas.height);
-			} else {
-				canvas_ctx.clearRect(0, 0, canvas.width, canvas.height);
-			}
-			$.each(data, function(key, items){
-
-				// console.log(key);
-				// console.log(sprites);
-				// console.log(sprites['scratches']);
-				// console.log(sprites[key]);
-
-				items.forEach((item) => {
-					canvas_ctx.drawImage(sprites[key], item[2][0]*r, item[2][1]*r, item[2][2]*r, item[2][3]*r, item[0]*r, item[1]*r, item[2][2]*r, item[2][3]*r);
-				})
 			});
-			// return canvas;
-			showList(canvas);
 		}
-
-
-
-
-
-		var showList = function(canvas){
-			$('#list_img').attr('crossorigin', 'anonymous');
-			$('#list_img').attr("src", canvas.toDataURL());
-			// $('#list').css('margin-left', '0');
-			$('#list').show();
-
-			$('.clipboard').removeClass('loading');
-			$('body').removeClass('loading');
-			$("#write").prop('disabled', false);
-		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -938,11 +965,16 @@
 
 
 	</script>
-<script>
+	<script>
 		ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
 		ga('create','UA-53425526-1','auto');ga('send','pageview')
 	</script>
-<script src="https://google-analytics.com/analytics.js" async defer></script>
-
+	<script src="//google-analytics.com/analytics.js" async defer></script>
+<!--
+	<script type="text/javascript" src="https://vk.com/js/api/openapi.js?167"></script>
+	<script type="text/javascript">
+		VK.Widgets.ContactUs("vk_contact_us", {text: "Паблик проекта"}, -18518753);
+	</script>
+-->
 </body>
 </html>
