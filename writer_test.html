@@ -626,7 +626,7 @@
 			<div class="ipad_border">
 				<div class="ipad">
 					<div class="ipad_screen">
-						<textarea name="" id="text" placeholder="Введите текст.." autofocus>йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 йцу 123 </textarea>
+						<textarea name="" id="text" placeholder="Введите текст.." autofocus></textarea>
 						<button id="write" disabled style="display: none;">Перевести в рукопись</button>
 					</div>
 					<div class="ipad_home"></div>
@@ -720,7 +720,7 @@
 			sendText();
 			// if(lists_count>3 && lists_count%3==0){
 			if(lists_count==2 || lists_count%3==0){
-				// openPopup();
+				openPopup();
 			}
 		});
 
@@ -757,53 +757,87 @@
 		dpi = '300';
 		var sprites = [];
 		var main_sprite = 'cyrillic_lowercase';
-
-
-/*
+		var sprites_loaded = [];
 		sprites[main_sprite] = new Image();
 		sprites[main_sprite].crossOrigin = 'anonymous';
 		sprites[main_sprite].src = './writer_core/cursives/kate/bitmaps/sprites/tiny/'+dpi+'dpi/'+main_sprite+'.png';
 		// sprite.src = 'https://raw.githubusercontent.com/CoobieXD/coobiexd.github.io/master/sprite.png?2';
 		sprites[main_sprite].onload = function() {
+			sprites_loaded[main_sprite] = true;
 			$('body').removeClass('loading');
 			$("#write").prop('disabled', false);
 		}
+
+
+
+
+
+
+
+/*
+if(window.OffscreenCanvas){
+	
+} else {
+	
+}
 */
-			$('body').removeClass('loading');
-			$("#write").prop('disabled', false);
-
-		// const imgblob = await fetch('writer_core/lists/list_dots.png').then(r => r.blob());
-		// const img = await createImageBitmap(imgblob);
 
 
 
 
 
 
+		var canvas = document.createElement('canvas'),
+		canvas_ctx = canvas.getContext('2d');
 
 
 
 
 
+		// var htmlCanvas = document.getElementById("canvas");
+		// var offscreen = htmlCanvas.transferControlToOffscreen();
+		var offscreen = new OffscreenCanvas();
 
 
 
 
-
-
-
-
-
-		if(window.OffscreenCanvas){
-			// var worker = new Worker('worker.js');
-			// var htmlCanvas = document.getElementById("canvas");
-			// var offscreen = htmlCanvas.transferControlToOffscreen();
-			// var offscreen = new OffscreenCanvas(4960, 7016);
-			// worker.postMessage({canvas: offscreen, data: data}, [offscreen]);
-		} else {
+		var worker = new Worker('worker.js');
+		list = new Image();
+		list.src = 'writer_core/lists/list_dots.png';
+		list.onload = function() {
+			worker.postMessage({canvas: offscreen}, [offscreen]);
 
 		}
-		var canvas = document.createElement('canvas');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -818,148 +852,85 @@
 
 		var sendText = function(){
 			var text = $("#text").val();
-			$.ajax({
-				// url: "/writer_core/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
-				// url: "/api/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
-				url: "//api.coo.by/writer/list.php?scratch&hyphen",
-				type: "post",
-				data: {text: text},
-				dataType: "json",
-				success: async function(data){
-					data = data[0];
+				$.ajax({
+					// url: "https://api.coo.by/writer_core/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
+					url: "https://api.coo.by/writer/list.php?scratch&hyphen",
+					type: "post",
+					data: {text: text},
+					dataType: "json",
+					success: function(data){
+					
+						data = data[0];
 
-					var spritesToLoad = await Object.keys(data);
-					await loadSprites(spritesToLoad, sprites);
-					await renderList(canvas, sprites, data, isMobile);
-					await showList(canvas);
-
-				}
-			});
-		}
+						var renderList = function(){
+							var ratio = isMobile ? 0.5 : 1;
+							ratio = 0.5;
 
 
 
 
 
-		var loadSprites = function(spritesToLoad, sprites){
-			if(spritesToLoad.every(spriteToLoad => sprites.hasOwnProperty(spriteToLoad))){
-				return;
-			} else {
+							canvas.width = 4960*ratio;
+							canvas.height = 7016*ratio;
+							if(window.location.hash !== '#max_blame'){
+								canvas_ctx.fillStyle = "#fff";
+								canvas_ctx.fillRect(0, 0, canvas.width, canvas.height);
+							} else {
+								canvas_ctx.clearRect(0, 0, canvas.width, canvas.height);
+							}
+							$.each(data, function(key, items){
+								items.forEach((item) => {
+									canvas_ctx.drawImage(sprites[key],   item[2][0]*ratio,   item[2][1]*ratio,   item[2][2]*ratio,   item[2][3]*ratio,   item[0]*ratio,   item[1]*ratio,   item[2][2]*ratio,   item[2][3]*ratio);
+								})
+							});
 
 
-				spritesToLoad.forEach(async (key, value) => {
-					if(!sprites.hasOwnProperty(key)){
-						const imgblob = await fetch('./writer_core/cursives/kate/bitmaps/sprites/tiny/'+dpi+'dpi/'+key+'.png').then(r => r.blob());
-						sprites[key] = await createImageBitmap(imgblob);
-					}
-				});
-				return;
+
+
+							$('#list_img').attr('crossorigin', 'anonymous');
+							$('#list_img').attr("src", canvas.toDataURL());
+							// $('#list').css('margin-left', '0');
+							$('#list').show();
 
 
 
 
 
-				// $.each(spritesToLoad, function(key, value){
-				// 	if(!sprites.hasOwnProperty(key)){
 
+							$('.clipboard').removeClass('loading');
+							$('body').removeClass('loading');
+							$("#write").prop('disabled', false);
+						}
 
-/*
-						sprites[value] = new Image();
-						sprites[value].crossOrigin = 'anonymous';
-						sprites[value].src = './writer_core/cursives/kate/bitmaps/sprites/tiny/'+dpi+'dpi/'+value+'.png';
-						sprites[value].onload = function() {
-							var canRender = true;
-							$.each(spritesToLoad, function(key, spriteToLoad){
-								if(!sprites[spriteToLoad].complete){
-									canRender = false;
+						var needed_keys = Object.keys(data);
+						if(needed_keys.every(needed_key => sprites.hasOwnProperty(needed_key))){
+							renderList();
+						} else {
+							$.each(data, function(key, value){
+								if(!sprites.hasOwnProperty(key)){
+									all_loaded = false;
+									sprites[key] = new Image();
+									sprites[key].crossOrigin = 'anonymous';
+									sprites[key].src = './writer_core/cursives/kate/bitmaps/sprites/tiny/'+dpi+'dpi/'+key+'.png';
+									sprites[key].onload = function() {
+										sprites_loaded[key] = true;
+										var canRender = true;
+										$.each(needed_keys, function(key, needed_key){
+											if(!sprites[needed_key].complete){
+												canRender = false;
+											}
+										});
+										if(canRender === true){
+											renderList();
+										}
+									}
 								}
 							});
-							if(canRender === true){
-								
-								return;;
-							}
 						}
-*/
 
-
-
-				// 	}
-				// });
-
-
-
-			}
-		};
-
-
-
-
-
-
-
-		var renderList = function(canvas, sprites, data, isMobile){
-
-			var canvas_ctx = canvas.getContext('2d');
-
-			// console.log(data);
-			// console.log(sprites);
-
-			var ratio = isMobile ? 0.5 : 1;
-			ratio = 0.5;
-
-			canvas.width = 4960*ratio;
-			canvas.height = 7016*ratio;
-			if(window.location.hash !== '#max_blame'){
-				canvas_ctx.fillStyle = "#fff";
-				canvas_ctx.fillRect(0, 0, canvas.width, canvas.height);
-			} else {
-				canvas_ctx.clearRect(0, 0, canvas.width, canvas.height);
-			}
-			$.each(data, function(key, items){
-
-				console.log(sprites);
-				console.log(key);
-				console.log(sprites[key]);
-
-				items.forEach((item) => {
-					canvas_ctx.drawImage(sprites[key],   item[2][0]*ratio,   item[2][1]*ratio,   item[2][2]*ratio,   item[2][3]*ratio,   item[0]*ratio,   item[1]*ratio,   item[2][2]*ratio,   item[2][3]*ratio);
-				})
+					}
 			});
-			return canvas;
 		}
-
-
-		var showList = function(canvas){
-			$('#list_img').attr('crossorigin', 'anonymous');
-			$('#list_img').attr("src", canvas.toDataURL());
-			// $('#list').css('margin-left', '0');
-			$('#list').show();
-
-			$('.clipboard').removeClass('loading');
-			$('body').removeClass('loading');
-			$("#write").prop('disabled', false);
-		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
