@@ -820,7 +820,8 @@
 			var text = $("#text").val();
 			$.ajax({
 				// url: "/writer_core/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
-				url: "/api/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
+				// url: "/api/list.php?scratch&hyphen", // rand&300dpi&scratch&hyphen&curv
+				url: "//api.coo.by/writer/list.php?scratch&hyphen",
 				type: "post",
 				data: {text: text},
 				dataType: "json",
