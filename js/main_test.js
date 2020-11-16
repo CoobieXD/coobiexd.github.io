@@ -19,6 +19,19 @@
 	$('body').removeClass('loading');
 	$("#write").prop('disabled', false);
 
+/*
+загрузка страницы
+убираем loading, разрешаем отправлять текст
+??? подгрузка main_sprite
+клик на #write
+отправка текста sendText()
+догрузка необходимых спрайтов loadSprites()
+рендер листа на канвасе renderList()
+перенос канваса на изображение showList(canvas)
+подсказать о донате openPopup()
+
+
+*/
 
 
 
@@ -40,6 +53,21 @@
 
 	var canvas = document.createElement('canvas');
 	var sprites = [];
+/*
+	var main_sprite = 'cyrillic_lowercase';
+	sprites[main_sprite] = new Image();
+	sprites[main_sprite].crossOrigin = 'anonymous';
+	sprites[main_sprite].src = './writer_core/cursives/kate/bitmaps/sprites/tiny/'+dpi+'dpi/'+main_sprite+'.png';
+	// sprite.src = 'https://raw.githubusercontent.com/CoobieXD/coobiexd.github.io/master/sprite.png?2';
+	sprites[main_sprite].onload = function() {
+		$('body').removeClass('loading');
+	}
+*/
+
+	// const imgblob = await fetch('writer_core/lists/list_dots.png').then(r => r.blob());
+	// const img = await createImageBitmap(imgblob);
+
+
 
 
 
@@ -149,6 +177,20 @@
 
 
 
+
+
+/*
+	// OffscreenCanvas
+	if(window.OffscreenCanvas){
+		// var worker = new Worker('worker.js');
+		// var htmlCanvas = document.getElementById("canvas");
+		// var offscreen = htmlCanvas.transferControlToOffscreen();
+		// var offscreen = new OffscreenCanvas(4960, 7016);
+		// worker.postMessage({canvas: offscreen, data: data}, [offscreen]);
+	} else {
+
+	}
+*/
 
 
 
