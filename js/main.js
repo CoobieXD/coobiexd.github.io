@@ -47,7 +47,7 @@
 		console.log('sendText');
 		var text = $("#text").val();
 		$.ajax({
-			url: "//api.coo.by/writer/list",
+			url: "//api0.coo.by/writer/list.php",
 			type: "POST",
 			data: {text: text},
 			dataType: "json",
