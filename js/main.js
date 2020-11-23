@@ -43,16 +43,26 @@
 
 
 
-	var sendText = function(){
+	var sendText = function(url="https://api0.coo.by/writer/list.php?ping", timeout=3000){
 		console.log('sendText');
 		var text = $("#text").val();
 		$.ajax({
-			url: "//api0.coo.by/writer/list.php",
+			url: url,
 			type: "POST",
 			data: {text: text},
 			dataType: "json",
+			timeout: timeout,
 			success: function(data){
-				loadSprites(data[0]);
+				console.log('success', url);
+				if(data.status == 'ok'){
+					loadSprites(data['lists'][0]);
+				} else {
+					// sendText("https://api.coo.by/writer/list.php?ping", 30000);
+				}
+			},
+			error: function(data){
+				console.log('error', url);
+				sendText("https://api.coo.by/writer/list.php?ping", 30000);
 			}
 		});
 	}
