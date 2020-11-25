@@ -43,26 +43,36 @@
 
 
 
-	var sendText = function(url="https://api0.coo.by/writer/list.php?ping", timeout=3000){
+	var api_url = "https://api0.coo.by/writer/list.php?ping";
+	var api_timer;
+	var sendText = function(timeout=3000){
 		console.log('sendText');
 		var text = $("#text").val();
 		$.ajax({
-			url: url,
+			url: api_url,
 			type: "POST",
 			data: {text: text},
 			dataType: "json",
 			timeout: timeout,
 			success: function(data){
-				console.log('success', url);
+				console.log('success', api_url);
 				if(data.status == 'ok'){
 					loadSprites(data['lists'][0]);
 				} else {
-					// sendText("https://api.coo.by/writer/list.php?ping", 30000);
+					// api_timer = setInterval(function(){
+					// 	api_url = "https://api.coo.by/writer/list.php?ping";
+					// }, 10000);
+					// sendText(30000);
 				}
 			},
 			error: function(data){
-				console.log('error', url);
-				sendText("https://api.coo.by/writer/list.php?ping", 30000);
+				console.log('error', api_url);
+				clearInterval(api_timer);
+				api_timer = setInterval(function(){
+					api_url = "https://api0.coo.by/writer/list.php?ping";
+				}, 30000);
+				api_url = "https://api.coo.by/writer/list.php?ping";
+				sendText(30000);
 			}
 		});
 	}
@@ -174,7 +184,8 @@
 		$('.clipboard').addClass('loading');
 		sendText();
 		// if(lists_count>3 && lists_count%3==0){
-		if(lists_count==2 || lists_count%3==0){
+		// if(lists_count==2 || lists_count%3==0){
+		if(lists_count%3==0){
 			openPopup();
 		}
 	});
