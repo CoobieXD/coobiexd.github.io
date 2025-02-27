@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSFW Детектор</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            background: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 480px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        label {
+            flex: 1;
+        }
+        input, select {
+            flex: 1;
+        }
+        .sensitivity-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sensitivity-container .row {
+            padding-bottom: 6px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button.success {
+            background-color: #28a745;
+        }
+        #status {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/nsfwjs/dist/browser/nsfwjs.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <h1>NSFW Детектор</h1>
+    <div class="container">
+        <div class="row">
+            <label for="obsAddress">OBS WebSocket Адрес:</label>
+            <input type="text" id="obsAddress" value="127.0.0.1">
+        </div>
+        <div class="row">
+            <label for="obsPort">OBS WebSocket Порт:</label>
+            <input type="number" id="obsPort" value="4455">
+        </div>
+        <div class="row">
+            <label for="obsPassword">OBS WebSocket Пароль:</label>
+            <input type="password" id="obsPassword" value="****************">
+        </div>
+        <div class="row">
+            <label for="obsSourceName">OBS Источник:</label>
+            <input type="text" id="obsSourceName" value="Захват окна">
+        </div>
+        <div class="row">
+            <label for="obsFilterName">OBS Фильтр:</label>
+            <input type="text" id="obsFilterName" value="Цензура">
+        </div>
+        <button id="connectOBS">Подключиться</button>
+        <div class="row">
+            <label for="modelSelect">Выберите модель:</label>
+            <select id="modelSelect">
+                <option value="mobilenet_v2">MobileNet V2 (90% точность - 2.6MB)</option>
+                <option value="mobilenet_v2_mid">MobileNet V2 Mid (93% точность - 4.2MB)</option>
+                <option value="inception_v3" selected>Inception V3 (93% точность - Огромный размер!)</option>
+            </select>
+        </div>
+        <div class="row">
+            <label for="pollingRate">Частота опроса (мс):</label>
+            <input type="number" id="pollingRate" value="150" min="50" step="50">
+        </div>
+        <div class="sensitivity-container">
+            <div class="row">
+                <label for="sensitivityPorn">Чувствительность Porn:</label>
+                <input type="range" id="sensitivityPorn" min="0" max="100" step="1" value="98">
+                <span id="sensitivityPornValue">98</span>
+            </div>
+            <div class="row">
+                <label for="sensitivitySexy">Чувствительность Sexy:</label>
+                <input type="range" id="sensitivitySexy" min="0" max="100" step="1" value="30">
+                <span id="sensitivitySexyValue">30</span>
+            </div>
+            <div class="row">
+                <label for="sensitivityHentai">Чувствительность Hentai:</label>
+                <input type="range" id="sensitivityHentai" min="0" max="100" step="1" value="50">
+                <span id="sensitivityHentaiValue">50</span>
+            </div>
+        </div>
+        <button id="captureScreen">Начать захват экрана</button>
+    </div>
+    <video id="video" autoplay style="display: none;"></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <h1 id="status"></h1>
+
+    <script>
+        let model;
+        const updateValue = (id) => document.getElementById(id + "Value").innerText = document.getElementById(id).value;
+        ["sensitivityPorn", "sensitivitySexy", "sensitivityHentai"].forEach(id => {
+            document.getElementById(id).addEventListener("input", () => updateValue(id));
+        });
+
+        const captureScreen = document.getElementById("captureScreen");
+        captureScreen.addEventListener("click", async () => {
+            const modelType = document.getElementById("modelSelect").value;
+            let pollingRate = parseInt(document.getElementById("pollingRate").value);
+            
+            try {
+                model = await nsfwjs.load(`/nsfwjs/models/${modelType}/`, modelType === "inception_v3" ? { size: 299 } : modelType === "mobilenet_v2_mid" ? { type: "graph" } : {});
+                console.log("✅ Модель загружена!");
+                captureScreen.classList.add("success");
+            } catch (error) {
+                console.error("❌ Ошибка загрузки модели:", error);
+                return;
+            }
+
+            const video = document.getElementById("video");
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            const status = document.getElementById("status");
+
+            const obsSourceName = document.getElementById("obsSourceName").value;
+            const obsFilterName = document.getElementById("obsFilterName").value;
+
+            try {
+                const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                video.srcObject = stream;
+
+                let censored = false;
+                setInterval(async () => {
+                    pollingRate = parseInt(document.getElementById("pollingRate").value)
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                    const img = tf.browser.fromPixels(canvas);
+                    const predictions = await model.classify(img);
+                    img.dispose();
+
+                    const thresholds = {
+                        "Porn": parseFloat(document.getElementById("sensitivityPorn").value) / 100,
+                        "Sexy": parseFloat(document.getElementById("sensitivitySexy").value) / 100,
+                        "Hentai": parseFloat(document.getElementById("sensitivityHentai").value) / 100,
+                    };
+                    
+                    const nsfwDetected = predictions.some(pred => pred.probability > thresholds[pred.className]);
+
+                    if(nsfwDetected && !censored){
+                        censored = true;
+                        // pollingRate = 1000;
+                        callOBSMethod('SetSourceFilterEnabled', {sourceName: obsSourceName, filterName: obsFilterName, filterEnabled: true});
+                    } else if (!nsfwDetected && censored) {
+                        censored = false;
+                        callOBSMethod('SetSourceFilterEnabled', {sourceName: obsSourceName, filterName: obsFilterName, filterEnabled: false});
+                    }
+                    
+                    status.innerText = nsfwDetected ? "❌ NSFW контент!" : "✅ Чистый экран";
+                    status.style.color = nsfwDetected ? "red" : "green";
+                }, pollingRate);
+            } catch (err) {
+                console.error("Ошибка захвата экрана:", err);
+            }
+        });
+
+
+        let socket;
+        const connectOBS = document.getElementById("connectOBS");
+        connectOBS.addEventListener("click", () => {
+            const obsAddress = document.getElementById("obsAddress").value;
+            const obsPort = document.getElementById("obsPort").value;
+            const obsPassword = document.getElementById("obsPassword").value;
+
+            socket = new WebSocket(`ws://${obsAddress}:${obsPort}`);
+            const password = obsPassword;
+
+            socket.onopen = function(event) {
+                console.log('Connected to OBS WebSocket server');
+                connectOBS.classList.add("success");
+            };
+
+            socket.onclose = function(event) {
+                console.log('Disconnected from OBS WebSocket server');
+                console.log('Reason:', event.reason);
+                console.log('Code:', event.code);
+            };
+
+            socket.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+
+            socket.onmessage = async function(event) {
+                const response = JSON.parse(event.data);
+                if (response.d.authentication && response.op === 0) {
+                    console.log('auth 0');
+                    const salt = response.d.authentication.salt;
+                    const challenge = response.d.authentication.challenge;
+                    const secret = calculateHash(password + salt);
+                    const authResponseHash = calculateHash(secret + challenge);
+                    const payload = {
+                        op: 1,
+                        d: {
+                            rpcVersion: 1,
+                            authentication: authResponseHash,
+                        }
+                    }
+                    socket.send(JSON.stringify(payload));
+                }
+            };
+        });
+
+        function calculateHash(data) {
+            const hash = CryptoJS.SHA256(data);
+            return hash.toString(CryptoJS.enc.Base64);
+        }
+
+        function callOBSMethod(method, data, id=null) {
+            const payload = {
+                op: 6,
+                d: {
+                    requestType: method,
+                    requestId: id,
+                    requestData: data,
+                }
+            };
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify(payload));
+                // console.log(new Date().getTime(), `Sent custom alert to OBS: ${data}`);
+            } else {
+                console.error('WebSocket connection not open!');
+            }
+        }
+    </script>
+</body>
+</html>
