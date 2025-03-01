@@ -18,6 +18,8 @@
             flex-direction: column;
             gap: 15px;
             width: 480px;
+            padding: 15px;
+            border-radius: 8px;
         }
         .row {
             display: flex;
@@ -29,6 +31,7 @@
         }
         input, select {
             flex: 1;
+            border: 1px solid #444;
         }
         .sensitivity-container {
             display: flex;
@@ -51,12 +54,32 @@
             background-color: #0056b3;
         }
         button.success {
-            background-color: #28a745;
+            background-color: #28a745 !important;
         }
         #status {
             font-size: 24px;
             font-weight: bold;
             margin-top: 20px;
+        }
+
+        body.dark-mode {
+            background: #121212;
+            color: #ffffff;
+        }
+        body.dark-mode .container {
+            background: #1e1e1e;
+        }
+        body.dark-mode input, 
+        body.dark-mode select {
+            background: #2c2c2c;
+            color: #ffffff;
+            border: 1px solid #444;
+        }
+        body.dark-mode button {
+            background-color: #444;
+        }
+        body.dark-mode button:hover {
+            background-color: #666;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs" defer></script>
@@ -102,22 +125,33 @@
         <div class="sensitivity-container">
             <div class="row">
                 <label for="sensitivityPorn">Чувствительность Porn:</label>
-                <input type="range" id="sensitivityPorn" min="0" max="100" step="1" value="98">
                 <span id="sensitivityPornValue">98</span>
+                <input type="range" id="sensitivityPorn" min="0" max="100" step="1" value="98">
             </div>
             <div class="row">
                 <label for="sensitivitySexy">Чувствительность Sexy:</label>
-                <input type="range" id="sensitivitySexy" min="0" max="100" step="1" value="30">
                 <span id="sensitivitySexyValue">30</span>
+                <input type="range" id="sensitivitySexy" min="0" max="100" step="1" value="30">
             </div>
             <div class="row">
                 <label for="sensitivityHentai">Чувствительность Hentai:</label>
-                <input type="range" id="sensitivityHentai" min="0" max="100" step="1" value="50">
                 <span id="sensitivityHentaiValue">50</span>
+                <input type="range" id="sensitivityHentai" min="0" max="100" step="1" value="50">
             </div>
         </div>
         <button id="captureScreen">Начать захват экрана</button>
+
+        <ol>
+            <li>Открыть эту страницу в браузере (напр. Google Chrome)</li>
+            <li>Ввести пароль OBS websocket, название источника который нужно мониторить, название фильтра этого источника и нажать "Подключиться"</li>
+            <li>Нажать "Начать захват экрана" и выбрать экран или окно который мы мониторим</li>
+        </ol>
     </div>
+
+    <div class="row">
+        <label>Очень смуглая тема: <input type="checkbox" id="darkModeToggle"></label>
+    </div>
+
     <video id="video" autoplay style="display: none;"></video>
     <canvas id="canvas" style="display: none;"></canvas>
     <h1 id="status"></h1>
@@ -258,6 +292,58 @@
                 console.error('WebSocket connection not open!');
             }
         }
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const elements = document.querySelectorAll("input, select");
+            const darkModeToggle = document.getElementById("darkModeToggle");
+            
+            // Загружаем сохраненные значения
+            elements.forEach(el => {
+                const savedValue = localStorage.getItem(el.id);
+                if (savedValue !== null) {
+                    if (el.type === "checkbox") {
+                        el.checked = savedValue === "true";
+                    } else {
+                        el.value = savedValue;
+                    }
+                }
+            });
+
+            // Применяем темную тему, если включена
+            if (localStorage.getItem("darkMode") === "true") {
+                document.body.classList.add("dark-mode");
+                darkModeToggle.checked = true;
+            }
+
+            // Слушаем изменения и сохраняем их
+            elements.forEach(el => {
+                el.addEventListener("input", () => {
+                    if (el.type === "checkbox") {
+                        localStorage.setItem(el.id, el.checked);
+                    } else {
+                        localStorage.setItem(el.id, el.value);
+                    }
+                });
+            });
+
+            // Обновляем значения для range-инпутов
+            ["sensitivityPorn", "sensitivitySexy", "sensitivityHentai"].forEach(id => {
+                document.getElementById(id).dispatchEvent(new Event("input"));
+            });
+
+            // Переключение темной темы
+            darkModeToggle.addEventListener("change", () => {
+                if (darkModeToggle.checked) {
+                    document.body.classList.add("dark-mode");
+                    localStorage.setItem("darkMode", "true");
+                } else {
+                    document.body.classList.remove("dark-mode");
+                    localStorage.setItem("darkMode", "false");
+                }
+            });
+        });
     </script>
 </body>
 </html>
